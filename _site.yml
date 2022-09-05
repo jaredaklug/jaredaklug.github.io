@@ -11,7 +11,7 @@ navbar:
       href: resume.html
     - icon: fa-envelope fa-lg
       href: mailto:<jaredk1097@gmail.com>
-    - icon: fa-githug fa-lg
+    - icon: fa-github fa-lg
       href: https://github.com/jaredaklug
     - icon: fa-linkedin fa-lg
       href: https://www.linkedin.com/in/jaredklug/
