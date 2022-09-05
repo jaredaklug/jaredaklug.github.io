@@ -2,7 +2,6 @@
 title: "My Portfolio Website"
 output: 
   html_document:
-    toc_float: true
     theme: cerulean
 ---
 
