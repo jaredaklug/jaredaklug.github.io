@@ -1,0 +1,14 @@
+---
+title: "My awesome website"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: leonids
+---
+
+### I am
+
+## Jared Klug
+
+Data Scientist and Bioinformatics enthusiast. Driven to produce powerful insights to improve healthcare for everyone.
