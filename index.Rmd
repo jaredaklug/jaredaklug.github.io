@@ -1,8 +1,7 @@
 ---
-title: "My awesome website"
+title: "My Portfolio Website"
 output: 
   html_document:
-    toc: true
     toc_float: true
     theme: cerulean
 ---
