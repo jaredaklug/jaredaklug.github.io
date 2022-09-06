@@ -70,7 +70,7 @@ Port Washington, NY
 
 <br>
 
-<center> <h2>Academic Projects</h2> </center>
+<center> <h2>Projects</h2> </center>
 
 <h4>Simulation Study: Comparing Variable Selection Methods</h4>  
 Columbia University [Spring 2021]{style="float:right"}  
@@ -81,4 +81,41 @@ Columbia University [Spring 2021]{style="float:right"}
 Columbia University [Spring 2021]{style="float:right"}  
 
 * Worked individually to train machine learning models to predict the winner of the 2021 March Madness tournament
+
+<h4>Future of COVID-19: Looking at Past Pandemics</h4>  
+Columbia University [Fall 2020]{style="float:right"}  
+
+* Worked in group of four to develop shiny dashboard report with interactive plots, as well as choropleth map comparing COVID-19 cumulative case and death data to that of past pandemics and seasonal flu
+
+<h4>Linear Model to Explain Hate Crimes in the U.S. in 2016</h4>  
+Columbia University [Fall 2020]{style="float:right"}  
+
+* Worked in group of five to construct linear models and study covariates associated with hate crimes in the U.S. in 2016
+
+<h4>Prototyping an EpiPen Insulator</h4>  
+Columbia University [Spring 2018]{style="float:right"} 
+
+* Worked in group of four to design and create functional prototype based on client's wants and needs
+
+<br>
+
+<center> <h2>Skills</h2> </center>
+
+**In order of competency:**  
+
+* R 
+
+* SQL
+
+* SAS
+
+* Python
+
+* Microsoft Access, Excel, Powerpoint, and Word
+
+* Bash
+
+* MATLAB
+
+* C++ 
 
