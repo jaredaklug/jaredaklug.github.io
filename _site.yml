@@ -1,4 +1,5 @@
 name: ""
+output_dir: "."
 navbar:
   title: "J. Klug"
   right:
