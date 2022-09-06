@@ -1,28 +1,21 @@
-url: https://jaredaklug.github.io
-template:
-  bootstrap: 5
-  bootswatch: lux
+name: ""
+output_dir: "."
 navbar:
-  structure:
-    right: [about, portfolio, resume, email, github, linkedin]
-  components:
-    about:      
-      text: "About"
+  title: "J. Klug"
+  right:
+    - text: "About"
       href: about.html
-    portfolio:
-      text: "Portfolio"
+    - text: "Portfolio"
       href: 
-    resume:
-      text: "Resume"
+    - text: "Resume"
       href: resume.html
-    email:
-      icon: fa-envelope fa-lg
+    - icon: fa-envelope fa-lg
       href: mailto:<jaredk1097@gmail.com>
-      aria-label: Email
-    github:
-      icon: fa-github fa-lg
+    - icon: fa-github fa-lg
       href: https://github.com/jaredaklug
-      aria-label: Github
-    linkedin:
-      icon: fa-linkedin fa-lg
+    - icon: fa-linkedin fa-lg
       href: https://www.linkedin.com/in/jaredklug/
+output:
+  html_document:
+    css: bootstrap.css
+    

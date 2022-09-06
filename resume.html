@@ -11,7 +11,7 @@
 
 
 
-<title>My Portfolio Website</title>
+<title>resume.knit</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -225,6 +228,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -232,6 +298,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -285,22 +361,111 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">My Portfolio Website</h1>
 
 </div>
 
 
-<div id="i-am" class="section level3">
-<h3>I am</h3>
+<center>
+<h2>
+Education
+</h2>
+</center>
+<h3>
+Columbia University
+</h3>
+<p>Mailman School of Public Health - New York, NY <span
+style="float:right">April 2022</span><br />
+Master of Science in Biostatistics<br />
+GPA: 4.00</p>
+<h3>
+Boston University
+</h3>
+<p>College of Engineering - Boston, MA <span style="float:right">May
+2019</span><br />
+Bachelor of Science in Biomedical Engineering<br />
+GPA: 3.48 - Cum Laude</p>
+<p><br></p>
+<center>
+<h2>
+Work Experience
+</h2>
+</center>
+<h3>
+Computational Research Technician
+</h3>
+<p><strong>Weill Cornell Medicine</strong> <span
+style="float:right">June 2021 - Present</span><br />
+Department of Immunology - New York, NY</p>
+<ul>
+<li><p>Developed supervised and unsupervised machine learning models to
+identify meaningful patterns and variables of clinical data using
+R</p></li>
+<li><p>Conducted GWAS to identify regions associated with damaging
+potential in fungi found in human gut</p></li>
+<li><p>Experience with HPC clusters (slurm based) to run NGS assemblies
+and analysis</p></li>
+<li><p>Developed pipeline to assemble and analyze fungal genomes in both
+de novo assembly-based and referenced-based techniques utilizing
+<em>GATK</em>, <em>BWA</em>, and <em>samtools</em> among other
+packages</p></li>
+<li><p>Constructed dozens of exploratory reports to visualize
+differences in IBD groups using <em>ggplot</em> and <em>Shiny</em>
+packages in R</p></li>
+<li><p>created in-house database to organize project data with Microsoft
+Access and SQL</p></li>
+</ul>
+<h3>
+Undergraduate Researcher
+</h3>
+<p><strong>Massachusetts General Hospital</strong> <span
+style="float:right">Sept 2018 - May 2019</span><br />
+Martinos Center for Biomedical Imaging - Charlestown, MA</p>
+<ul>
+<li><p>Developed highly accurate SVM classifier model with R using blood
+biomarkers to identify at risk Alzheimer’s subjects</p></li>
+<li><p>Wrote custom R script to pull data from API and clean large
+dataset from national Alzheimer’s database</p></li>
+<li><p>Utilized statistical methods such as PCR to handle high
+dimensional data and preformed validation methods including 10-fold
+cross validation to corroborate results</p></li>
+</ul>
+<p><br></p>
+<center>
+<h2>
+Additional Work Experience
+</h2>
+</center>
+<h3>
+Private Tutor
+</h3>
+<p><strong>Subjects: SAT Math, GRE Math, Algebra, Calculus,
+Statistics</strong> <span style="float:right">May 2018 - May
+2022</span><br />
+New York, NY</p>
+<ul>
+<li><p>Prepare lesson plans tailored to needs of specific students and
+engage them using applicable examples and vernacular</p></li>
+<li><p>Assist with assigned homework and projects, with recent clients
+receiving high marks on math section of SAT and As in AP
+Calculus</p></li>
+</ul>
+<h3>
+Floral Clerk/Shop Assistant
+</h3>
+<p><strong>S.F. Falconer Florist Inc.</strong> <span
+style="float:right">Nov 2019 - June 2020</span><br />
+Port Washington, NY</p>
+<ul>
+<li><p>Assisted 30+ customers a day in making purchase decisions by
+understanding their needs and preferences</p></li>
+<li><p>Supported with pre-sales and post-sales support including product
+selection, making changes to orders, and managing expectations</p></li>
+</ul>
+
+
+
 </div>
-<div id="jared-klug" class="section level2">
-<h2>Jared Klug</h2>
-<p>Data Scientist and Bioinformatics enthusiast. Driven to produce
-powerful insights to improve healthcare for everyone.</p>
 </div>
-
-
-
 
 </div>
 
@@ -333,6 +498,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

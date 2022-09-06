@@ -1,0 +1,69 @@
+---
+title: ""
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+<center> <h2>Education</h2> </center>
+
+<h3>Columbia University</h3>
+Mailman School of Public Health - New York, NY [April  2022]{style="float:right"}  
+Master of Science in Biostatistics  
+GPA: 4.00  
+
+<h3>Boston University</h3>
+College of Engineering - Boston, MA  [May 2019]{style="float:right"}  
+Bachelor of Science in Biomedical Engineering  
+GPA: 3.48 - Cum Laude  
+
+<br>
+
+<center> <h2>Work Experience</h2> </center>
+
+<h3>Computational Research Technician</h3>
+**Weill Cornell Medicine** [June 2021 - Present]{style="float:right"}  
+Department of Immunology - New York, NY  
+
+* Developed supervised and unsupervised machine learning models to identify meaningful patterns and variables of clinical data using R
+
+* Conducted GWAS to identify regions associated with damaging potential in fungi found in human gut
+
+* Experience with HPC clusters (slurm based) to run NGS assemblies and analysis
+
+* Developed pipeline to assemble and analyze fungal genomes in both de novo assembly-based and referenced-based techniques utilizing *GATK*, *BWA*, and *samtools* among other packages
+
+* Constructed dozens of exploratory reports to visualize differences in IBD groups using *ggplot* and *Shiny* packages in R
+
+* created in-house database to organize project data with Microsoft Access and SQL
+
+<h3>Undergraduate Researcher</h3>
+**Massachusetts General Hospital** [Sept 2018 - May 2019]{style="float:right"}  
+Martinos Center for Biomedical Imaging - Charlestown, MA  
+
+* Developed highly accurate SVM classifier model with R using blood biomarkers to identify at risk Alzheimer's subjects
+
+* Wrote custom R script to pull data from API and clean large dataset from national Alzheimer's database
+
+* Utilized statistical methods such as PCR to handle high dimensional data and preformed validation methods including 10-fold cross validation to corroborate results
+
+<br>
+
+<center> <h2>Additional Work Experience</h2> </center>
+
+<h3>Private Tutor</h3>
+**Subjects: SAT Math, GRE Math, Algebra, Calculus, Statistics** [May 2018 - May 2022]{style="float:right"}  
+New York, NY
+
+* Prepare lesson plans tailored to needs of specific students and engage them using applicable examples and vernacular
+
+* Assist with assigned homework and projects, with recent clients receiving high marks on math section of SAT and As in AP Calculus
+
+<h3>Floral Clerk/Shop Assistant</h3>
+**S.F. Falconer Florist Inc.** [Nov 2019 - June 2020]{style="float:right"}  
+Port Washington, NY
+
+* Assisted 30+ customers a day in making purchase decisions by understanding their needs and preferences
+
+* Supported with pre-sales and post-sales support including product selection, making changes to orders, and managing expectations

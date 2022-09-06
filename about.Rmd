@@ -1,0 +1,15 @@
+---
+title: "About Me"
+output: 
+  html_document
+---
+
+Hello! Thanks for visiting my portfolio website!
+
+My name is Jared, and I believe that data is the future. The patterns that hide in data can unlock so many important insights across almost every industry. While it seems there is an unlimited amount of data out there, only a handful of people know how to look at the data to extract those underlying patterns.
+
+I strive to be one of these people. Where one can analytically derive important findings, but also disseminate the information to everyone. My main focus is in healthcare data sets, and my goal is to help produce the best care possible for people through data science. 
+
+At my current position, I am working on researching inflammatory bowel disease. More specifically, I am researching fungal genomes that populate our human intestinal systems where I combine both data science and bioinformatic techniques to further our understanding of the mycobiota's role in IBD.  
+
+While I cannot share any of ongoing research here, feel free to contact me or explore my page to see some of the other projects I have done!
