@@ -67,3 +67,18 @@ Port Washington, NY
 * Assisted 30+ customers a day in making purchase decisions by understanding their needs and preferences
 
 * Supported with pre-sales and post-sales support including product selection, making changes to orders, and managing expectations
+
+<br>
+
+<center> <h2>Academic Projects</h2> </center>
+
+<h4>Simulation Study: Comparing Variable Selection Methods</h4>  
+Columbia University [Spring 2021]{style="float:right"}  
+
+* Worked in group of three to simulate models to compare step-wise forward selection method and lasso regression
+
+<h4>Predicting the Outcome of the 2021 NCAA DI Men's Basketball Tournament</h4>  
+Columbia University [Spring 2021]{style="float:right"}  
+
+* Worked individually to train machine learning models to predict the winner of the 2021 March Madness tournament
+
