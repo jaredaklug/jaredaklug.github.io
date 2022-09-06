@@ -1,13 +1,12 @@
 name: ""
-output_dir: "."
 navbar:
   title: "J. Klug"
   right:
-    - text: "About"
+    - text: "ABOUT"
       href: about.html
-    - text: "Portfolio"
+    - text: "PORTFOLIO"
       href: 
-    - text: "Resume"
+    - text: "RESUME"
       href: resume.html
     - icon: fa-envelope
       href: mailto:<jaredk1097@gmail.com>

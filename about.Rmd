@@ -47,9 +47,27 @@ At my current position, I am working on researching inflammatory bowel disease. 
  
 <!-- (C) THE HTML -->
 <div class="wrap-flex">
-  <center><h3>Data Analytics</h3></center>
+  <center><h3>Data Visualization</h3></center>
   <center><h3>Machine Learning</h3></center>
   <center><h3>Bioinformatics</h3></center>
 </div>
 
+<br>
+
+<style>
+/* (A) FLEX CONTAINER */
+.wrap-flex { display: flex; gap: 30px;}
+ 
+/* (B) NOT IMPORTANT - COSMETICS */
+.wrap-flex > * {
+  width: 33%;
+}
+</style>
+ 
+<!-- (C) THE HTML -->
+<div class="wrap-flex">
+  <center><p>I love telling stories. One of my favorite skills is creating stunning presentations that engage people.</p></center>
+  <center><p>Machine learning is more than just using standard libraries. I love the statistical theory as well as the implementation. </p></center>
+  <center><p>I have worked with researchers to explore genomes and decrypt the complex code that makes up our natural world.</p></center>
+</div>
 

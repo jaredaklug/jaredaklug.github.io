@@ -1,5 +1,4 @@
 ---
-title: "My Portfolio Website"
 output: 
   html_document:
     css: bootstrap.css
