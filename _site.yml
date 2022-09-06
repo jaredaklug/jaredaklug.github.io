@@ -9,9 +9,9 @@ navbar:
       href: 
     - text: "Resume"
       href: resume.html
-    - icon: fa-envelope fa-lg
+    - icon: fa-envelope
       href: mailto:<jaredk1097@gmail.com>
-    - icon: fa-linkedin fa-lg
+    - icon: fa-linkedin
       href: https://www.linkedin.com/in/jaredklug/
 output:
   html_document:
