@@ -1,0 +1,12 @@
+---
+title: "My Portfolio Website"
+output: 
+  html_document:
+    css: bootstrap.min.css
+---
+
+### I am
+
+## Jared Klug
+
+Data Scientist and Bioinformatics enthusiast. Driven to produce powerful insights to improve healthcare for everyone.
