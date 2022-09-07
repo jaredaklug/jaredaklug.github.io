@@ -1,0 +1,368 @@
+---
+title: "march_madness_2021"
+author: "Jared Klug"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(caret)
+library(corrplot)
+library(glmnet)
+library(patchwork)
+
+theme1 <- trellis.par.get()
+theme1$plot.symbol$col <- rgb(.2, .4, .2, .5)
+theme1$plot.symbol$pch <- 16
+theme1$plot.line$col <- rgb(.8, .1, .1, 1)
+theme1$plot.line$lwd <- 2
+theme1$strip.background$col <- rgb(.0, .2, .6, .2)
+trellis.par.set(theme1)
+
+```
+
+# Introduction
+
+In this project, I have gotten data from [Kaggle](https://www.kaggle.com/c/ncaam-march-mania-2021), which contains extensive data of regular season games, and conferences for the NCAA Basketball seasons from 2003-2021. Using this data, I would like to predict the potential winners of the upcoming games in the 2021 March Madness Tournament.
+
+I am exploring the following questions:
+
+* Can I accurately predict the score differential of college basketball games?
+* Using past team season data, can I accurately predict which team will win a specific game of basketball?
+* Can I predict the winners of the NCAA March Madness Tournament games with more than 50% accuracy? 
+
+Using the "MRegularSeasonDetailedResults.csv" data from the extensive folder of information, the dataset from this file is 92832 rows with 34 columns. Each row corresponds to 1 basketball game from the 2003 season to 2020 season. Each row has data on which teams played, final scores of each team, and overall team stats from the game for each team such as number of shots attempted and made, penalties, rebounds, etc.
+
+In order to build a model to output point differential of a game, I would first need to compute the point differential of each game, as well as change column names from "winning" and "losing" team stats so that it would not be confusing when inputting future games' team names. 
+
+For exploratory data analysis, the data was manipulated so that instead of having 1 game with two team data, each row will correspond to 1 team and a game they played during a specified season and day. Using this data, it will be easier to explore factors that could lead to team wins or losses.
+
+```{r gather data, message = F, warning = F, echo=F}
+
+#Originial data --- used for model building
+og_df =read.csv("./data/ncaam-march-mania-2021/MRegularSeasonDetailedResults.csv") %>% 
+  rename_at(vars(starts_with("W")), ~str_replace(., "W", "T1_")) %>% 
+  rename_at(vars(starts_with("L")), ~str_replace(., "L", "T2_")) %>% 
+  mutate(
+    point_diff = T1_Score - T2_Score
+  ) %>% 
+  select(-Season, -DayNum , -T1_TeamID, -T1_Score, -T2_TeamID, -T2_Score, -T1_Loc, -NumOT)
+
+
+
+#Game-by-Game Data --- used for EDA
+df = read.csv("./data/ncaam-march-mania-2021/MRegularSeasonDetailedResults.csv") %>%
+  rowid_to_column("game_id") %>%
+   relocate(WLoc:NumOT, .after = DayNum) %>%
+  mutate(
+    Wpoint_diff = WScore - LScore,
+    Lpoint_diff = LScore - WScore
+  )%>%
+  pivot_longer(
+    WTeamID:Lpoint_diff,
+    names_to = "stat",
+    values_to = "count"
+  ) %>%
+  mutate(outcome = case_when(
+    str_detect(stat, "^W") ~ "win",
+    str_detect(stat, "^L") ~ "loss"
+  )) %>%
+  mutate(stat = substr(stat, 2, nchar(stat))) %>%
+  pivot_wider(
+    names_from = stat,
+    values_from = count
+  ) %>%
+  mutate(TeamID = as.factor(TeamID)) %>%
+  unnest()
+
+#Get each Team ID to change ID to team name
+team_id = read.csv("./data/ncaam-march-mania-2021/MTeams.csv") %>% 
+  select(TeamID, TeamName)
+
+#Change ID to team name in EDA data
+df[["TeamID"]] = team_id[match(df[["TeamID"]], team_id[["TeamID"]]) , "TeamName"]
+
+df = df %>% 
+  rename(
+    TeamName = TeamID
+  )
+
+
+#Season Data -- used to extract average team stats for predictions
+season_df = df %>% 
+  group_by(Season, TeamName) %>% 
+  summarize_at(vars(Score:point_diff), ~mean(.x))
+
+#March Madness all 68 teams
+MM21_teams = c("Gonzaga", "Baylor", "Illinois", "Michigan", "Alabama", "Ohio St", "Iowa", "Houston", 
+               "Arkansas", "West Virginia", "Texas", "Kansas", "Florida St", "Purdue", "Oklahoma St", "Virginia",
+               "Creighton", "Villanova", "Tennessee", "Colorado", "USC", "Texas Tech", "BYU", "San Diego St", 
+               "Oregon", "Connecticut", "Clemson", "Florida", "LSU", "Loyola-Chicago", "North Carolina", "Oklahoma",
+               "Missouri", "Georgia Tech", "Wisconsin", "Maryland", "St Bonaventure", "Virginia Tech", "VCU", "Rutgers",
+               "Syracuse", "Utah St", "Michigan St", "UCLA", "Wichita St", "Oregon St", "Georgetown", "Drake",
+               "Winthrop", "UC Santa Barbara", "Ohio", "North Texas", "Liberty", "UNC Greensboro", "Abilene Chr", "Morehead St",
+               "Colgate", "E Washington", "Grand Canyon", "Cleveland St", "Oral Roberts", "Iona", "Drexel", "Hartford",
+               "Mt St Mary's", "TX Southern", "Norfolk St", "Appalachian St")
+
+#2020 Avg Season Data for each team (used as input for predictions)
+season_20_tstat = season_df %>% 
+  filter(Season == 2020,
+         TeamName %in% MM21_teams) %>% 
+  ungroup() %>% 
+  select(-Season, -Score, -point_diff)
+
+
+```
+
+# Exploratory Data Analysis
+
+In a game of basketball obviously the team that scores the most points wins, so I did not think it would be necessary to compare the outcomes of games based on how many field goals, or 3-pointers, or free throws a team makes, because it is obviously the winning team will have higher stats. Instead, I will look at percentages made for each of those, as well as explore if the number of attempts of field goals, 3-pointers, or free throws has an obvious impact. I will also make a box plot for each of the other factors: offensive rebounds, defensive rebounds, time outs, steals, and blocks.
+```{r, echo=F}
+df = df %>% 
+  mutate(
+    FG.perc = FGM/FGA,
+    FG3.perc = FGM3/FGA3,
+    FT.perc = FTM/FTA
+  )
+```
+
+```{r, echo=F, warning=F, fig.width= 5, fig.height= 3}
+#Box plot of percentage fg, fg3, and ft by win/loss
+plot_fg = df %>% 
+  ggplot(aes(x = outcome, y = FG.perc)) + 
+  geom_boxplot()
+
+plot_fg3 = df %>% 
+  ggplot(aes(x = outcome, y = FG3.perc)) + 
+  geom_boxplot()
+
+plot_ft = df %>% 
+  ggplot(aes(x = outcome, y = FT.perc)) + 
+  geom_boxplot()
+
+plot_fg + plot_fg3 + plot_ft
+```
+
+The results from these box plots is no surprise, the team that is consistently scoring more wins the games as indicated by the higher average across the 3 variables for the winning teams. 
+
+```{r, echo = F, fig.width= 5, fig.height= 3 }
+#Box plot of attempted fg, fg3, and ft by win/loss
+plot_fga = df %>% 
+  ggplot(aes(x = outcome, y = FGA)) + 
+  geom_boxplot()
+
+plot_fga3 = df %>% 
+  ggplot(aes(x = outcome, y = FGA3)) + 
+  geom_boxplot()
+
+plot_fta = df %>% 
+  ggplot(aes(x = outcome, y = FTA)) + 
+  geom_boxplot()
+
+plot_fga + plot_fga3 + plot_fta
+
+```
+
+The results from these variables were very interesting. It shows that for 2 and 3 point shots, the losing team will, on average, have more shots attempted. However these averages are extremely close to each other, so it is hard to pull any conclusive evidence from these box plots. As for free throws, the winning team seems to have more free throws attempted, which makes sense as they're are likely being fouled more given more attempts at making extra points.
+
+```{r, echo=F, fig.width= 5, fig.height= 3}
+#Box plot of offensive and defensive rebounds by win/loss
+
+plot_or = df %>% 
+  ggplot(aes(x = outcome, y = OR)) + 
+  geom_boxplot()
+
+plot_dr = df %>% 
+  ggplot(aes(x = outcome, y = DR)) + 
+  geom_boxplot()
+
+plot_or + plot_dr
+
+```
+
+For offensive and defensive rebounds, we see opposite results. Interestingly the losing team will have more offensive rebounds. I can speculate that this is because they're missing shots and recovering the ball more. As for defensive rebounds, the winning team will typically have more defensive rebounds. 
+
+```{r, echo=F, fig.width= 5, fig.height= 3}
+#Box plot of timeouts, steals, and blocks by win/loss
+plot_to = df %>% 
+  ggplot(aes(x = outcome, y = TO)) + 
+  geom_boxplot()
+
+plot_stl = df %>% 
+  ggplot(aes(x = outcome, y = Stl)) +
+  geom_boxplot()
+
+plot_blk = df %>% 
+  ggplot(aes(x = outcome, y = Blk)) + 
+  geom_boxplot()
+
+plot_pf = df %>% 
+  ggplot(aes(x = outcome, y = PF)) + 
+  geom_boxplot()
+
+(plot_to + plot_stl) / (plot_blk + plot_pf)
+```
+
+I found it very interesting that the losing team will have more time-out calls on average. It makes sense that the team that wins will typically have more steals, therefore gaining a chance to score while taking away a chance for the opponents to score. Blocks result is very interesting as the mean is almost right on top of each other for the winning and losing team, but the spread around the mean is typically greater for the winning team than the losing team. We can expect some small impact for blocking for the winning team. For personal fouls, it is intuitive that the team that is causing more fouls will likely lose as they give the opposing team more attempts to score.
+
+# Models: Ridge, Lasso, and Elastic Net
+
+I will create 3 models that are well-known for the ability to select variables that are important. I am using these variable selection models because I believe there are variables that are provide unnecessary information to the point differential outcome.
+
+The tuning parameters for each model will be selected by repeated cross-validation, and the parameters with the smallest RMSE will be the chosen tune for the model. 
+
+The predictor variables for all models include the following stats from each game from the 2003 to 2020 season: field goals made and attempted, 3-pointers made and attempted, free throws made and attempted, offensive rebounds, defensive rebounds, assists, timeouts, steals, blocks, and personal fouls for each team. The output value is estimated point differential of the game (T1 score - T2 score). This output inherently carries the estimation of who will win the game as well.
+```{r, echo=F}
+#Create input and output for models
+set.seed(2021)
+
+og_df2 = model.matrix(point_diff ~ ., og_df)[, -1]
+
+trainRows = createDataPartition(y = og_df$point_diff, p = 0.8, list = F)
+
+x = og_df2[trainRows,]
+
+y = og_df$point_diff[trainRows]
+
+
+ctrl1 = trainControl(method = "repeatedcv", number = 10, repeats = 5)
+
+```
+
+## Ridge
+```{r, echo=F}
+#Ridge 
+set.seed(2021)
+
+ridge.fit = train(x,y,
+                  method = "glmnet",
+                  tuneGrid = expand.grid(alpha = 0,
+                                           lambda = exp(seq(1,-5, length = 50))),
+                  trControl = ctrl1)
+
+ridge.fit$bestTune
+
+#plot(ridge.fit, xTrans = log)
+
+ridge.pred = predict(ridge.fit, newdata = og_df2[-trainRows,])
+
+ridge.rmse = mean((ridge.pred - og_df$point_diff[-trainRows])^2)
+
+```
+
+## Lasso
+```{r, echo=F}
+#LASSO
+set.seed(2021)
+
+lasso.fit = train(x,y,
+                  method = "glmnet",
+                  tuneGrid = expand.grid(alpha = 1,
+                                           lambda = exp(seq(1,-5, length = 50))),
+                  trControl = ctrl1)
+
+lasso.fit$bestTune
+
+#plot(lasso.fit, xTrans = log)
+
+lasso.pred = predict(lasso.fit, newdata = og_df2[-trainRows,])
+
+lasso.rmse = mean((lasso.pred - og_df$point_diff[-trainRows])^2)
+
+```
+## Elastic Net
+```{r, echo=F}
+#Elastic Net
+set.seed(2021)
+enet.fit = train(x,y,
+                 method = "glmnet",
+                 tuneGrid = expand.grid(alpha = seq(0, 1, length = 15),
+                                         lambda = exp(seq(1, -5, length = 50))),
+                 trControl = ctrl1)
+
+
+enet.fit$bestTune
+
+#Make sure not an edge case:
+# log(enet.fit$bestTune[,2]) 
+#not an edge case, good to continue
+
+enet.pred = predict(enet.fit, newdata = og_df2[-trainRows,])
+
+enet.rmse = mean((enet.pred - og_df$point_diff[-trainRows])^2)
+
+```
+
+```{r, echo=F}
+set.seed(2021)
+
+resamp = resamples(list(enet = enet.fit, lasso = lasso.fit, ridge = ridge.fit))
+summary(resamp)
+
+rmse_df = data.frame(model = c("enet", "lasso", "ridge"), rmse = c(enet.rmse, lasso.rmse, ridge.rmse))
+
+rmse_df %>% knitr::kable("simple", caption = "RMSE Based on the 20% Partitioned Training Data")
+```
+
+Based off the resamples, the lasso and enet performances were very similar, while ridge regression had a very high RMSE relative to the other models. Enet still had the best performance as far as predictions, however lasso fit the data very marginally better according to the R-squared means.
+
+When comparing the model's RMSE from the 20% of data partitioned to be the testing data, we see very similar results as what we saw from the resamples. Because the elastic net model had the best prediction performance, it was the model I have chosen to try and make the predictions of the NCAA March Madness Tournament.
+
+In order to make these predictions, I first have to generate the input data, which is every single possible match-up of the tournament, as well as impute team stats for the model to use. Because the training data was able to use stats from those games that were recorded a posteriori. I chose to use average team stats from the 2020 regular season as a comparison. My concept is to expect that every game these teams will play in the tournament, they will have an average performance relative to their regular season.
+
+```{r, echo=F}
+coef(enet.fit$finalModel, enet.fit$bestTune$lambda)
+```
+
+
+```{r, echo=F}
+#Generate 2021 Match-ups (assuming every team will play each other)
+matches = t(combn(MM21_teams, 2)) %>% 
+  as.data.frame() %>% 
+  rename(
+    T1_name = V1,
+    T2_name = V2
+  )
+
+matches = left_join(matches, season_20_tstat, by = c("T1_name" = "TeamName"))
+
+colnames(matches)[3:15] = paste("T1_", colnames(matches)[3:15], sep = "")
+
+matches = left_join(matches, season_20_tstat, by = c("T2_name" = "TeamName"))
+  
+colnames(matches)[16:28] = paste("T2_", colnames(matches)[16:28], sep = "")
+
+MM21_pred = predict(enet.fit, newdata = matches)
+
+results = cbind(matches[1:2], MM21_pred)
+
+head(results)
+#Function to easily find
+
+find_matchup = function(t1_name, t2_name){
+  res = try(filter(results, 
+             T1_name == t1_name,
+             T2_name == t2_name), silent = T)
+  
+   if(nrow(res) == 0) {
+     res = try(filter(results, 
+             T2_name == t1_name,
+             T1_name == t2_name), silent = T)
+   }
+  return(res)
+}
+```
+
+# Results of Tournament
+
+As of now, there are still 12 games left in the tournament, when the tournament concludes I will report the final performance of the model. As of now, including the first 4 games of the 8 teams which had to play to make it to the official tournament, the model had predicted the correct winning team 37 times out of 54 games which is a 68.5% correct results. Unfortunately, the point differential output has been all over the place, and I will likely calculate an overall RMSE once the tournament concludes for point differential.
+
+Because of the nature of the input data, I'm not shocked that the model would not have an accurate point differential output to what has been happening in the tournament. However, I'm extremely satisfied with how the model performed as far as estimating the winning team. The biggest issue with the input data is that if a team in the tournament has only played lower tier teams during the regular season, they're likely to have inflated game statistics in their favor, making the model more heavily favor the team.
+
+# Conclusion
+
+Out of this project, I just wanted to make a model that chose the winning team more than 50% of the time (which would be equivalent to randomly guessing). I am more than shocked with the results of the model and am extremely happy with the results so far. In the future I would like to figure out a method to scale the data to account for opposing team performance. I.e. if the opposing team did not play well, the winning team's stats would be scaled down somewhat.
+
+I was overall surprised by the variables the model chose and how they impacted the estimations. The most influencing variables were the amount of baskets scored, and the amount of attempts were driven down to zero. I was surprised to see that offensive rebound were also driven down to zero and most shocked by how the model placed a negative coefficient for time outs -- meaning that a team that is calling a time out will negatively impact their score. 
