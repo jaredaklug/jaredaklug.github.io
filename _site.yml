@@ -3,8 +3,6 @@ output_dir: "."
 navbar:
   title: "J. Klug"
   right:
-    - text: "ABOUT"
-      href: about.html
     - text: "PORTFOLIO"
       href: portfolio.html
     - text: "RESUME"
