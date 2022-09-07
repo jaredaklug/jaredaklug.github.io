@@ -6,7 +6,7 @@ navbar:
     - text: "ABOUT"
       href: about.html
     - text: "PORTFOLIO"
-      href: 
+      href: portfolio.html
     - text: "RESUME"
       href: resume.html
     - icon: fa-envelope
