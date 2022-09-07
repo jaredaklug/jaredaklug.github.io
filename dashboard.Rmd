@@ -67,7 +67,7 @@ instacart %>%
 
 ```
 
-### Histogram of Amount of Orders Placed by User Throughout the Year
+### Histogram of Amount of Orders Placed by User Throughout the Year (change to most popular product by department)
 
 ```{r}
 
