@@ -102,7 +102,7 @@ Columbia University [Fall 2020]{style="float:right"}
 * Worked in group of five to construct linear models and study covariates associated with hate crimes in the U.S. in 2016
 
 <h4>Prototyping an EpiPen Insulator</h4>  
-Columbia University [Spring 2018]{style="float:right"} 
+Boston University [Spring 2018]{style="float:right"} 
 
 * Worked in group of four to design and create functional prototype based on client's wants and needs
 

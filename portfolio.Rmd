@@ -5,5 +5,5 @@ output: html_document
 [Click here](./projects/simulation_project.html)  
 [test2](./projects/march_madness_2021.html)  
 [interactive Shiny Dashboard](https://jak2312.shinyapps.io/shiny_dashboard/)  
-[instacart shiny dashboard](dashboard.html)
-[linear modeling of hate crimes](./projects/hate_crime.pdf)
+[instacart shiny dashboard](dashboard.html)  
+[linear modeling of hate crimes](./projects/hate_crime.pdf)  
