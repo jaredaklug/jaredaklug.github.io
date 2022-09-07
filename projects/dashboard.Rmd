@@ -1,0 +1,86 @@
+---
+title: "Instacart Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source: embed
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+
+library(flexdashboard)
+```
+
+```{r clean_data}
+data("instacart")
+
+instacart = 
+  instacart %>% 
+  select(-eval_set, -add_to_cart_order, -days_since_prior_order)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Items Ordered by Hour and Day of Week
+
+```{r}
+
+instacart %>% 
+  mutate(
+    order_dow = recode(order_dow, `0` = "Sunday", `1` = "Monday", `2` = "Tuesday", `3` = "Wednesday", `4` = "Thursday", `5` = "Friday", `6` = "Saturday")
+  ) %>% 
+	group_by(order_dow) %>% 
+  count(order_hour_of_day) %>% 
+  plot_ly(x = ~order_hour_of_day, y = ~n,
+          type = "scatter", mode = "lines+markers", color = ~order_dow) %>% 
+    layout(
+    xaxis = list(title = "Hour of the Day"),
+    yaxis = list(title = "# Ordered")
+    )
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Items Ordered by Department
+
+```{r}
+
+instacart %>% 
+	count(department) %>% 
+	mutate(
+		department = factor(department),
+		department = fct_reorder(department, n)
+	) %>% 
+	plot_ly(y = ~n, x = ~department, color = ~department,
+	        type = "bar", colors = "viridis") %>% 
+  layout(
+    xaxis = list(title = "Department"),
+    yaxis = list(title = "# Ordered")
+    )
+
+```
+
+### Histogram of Amount of Orders Placed by User Throughout the Year
+
+```{r}
+
+instacart %>% 
+  group_by(user_id) %>% 
+  summarise(times_ordered = max(order_number)) %>% 
+  plot_ly(x = ~times_ordered, 
+          type = "histogram", nbinsx = 25) %>% 
+  layout(
+    xaxis = list(title = "Time Ordered"),
+    yaxis = list(title = "Frequency Count")
+    )
+  
+
+```
+
