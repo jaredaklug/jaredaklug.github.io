@@ -8,7 +8,7 @@ navbar:
     - text: "RESUME"
       href: resume.html
     - icon: fa-envelope
-      href: mailto:<jaredk1097@gmail.com>
+      href: mailto:<jared.a.klug@gmail.com>
     - icon: fa-linkedin
       href: https://www.linkedin.com/in/jaredklug/
 output:

@@ -6,126 +6,61 @@ output:
     toc_float: true
 ---
 
-<center> <h2>Education</h2> </center>
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
 
-<h3>Columbia University</h3>
-Mailman School of Public Health - New York, NY [April  2022]{style="float:right"}  
-Master of Science in Biostatistics  
-GPA: 4.00  
+## WORK EXPERIENCE
 
-<h3>Boston University</h3>
-College of Engineering - Boston, MA  [May 2019]{style="float:right"}  
-Bachelor of Science in Biomedical Engineering  
-GPA: 3.48 - Cum Laude  
+### Memorial Sloan Kettering
+**Data Analyst** | New York, NY | Dec. 2022 -- Present
 
-<br>
+- Optimized data processing pipeline using parallel computing and cluster technology, reducing computational time by 50%, leading to faster clinical insight
+- Implemented advanced statistical techniques, including a robust method to quantify surgeons' contribution to outcome variation. This data-driven approach led to a redesigned feedback system, resulting in a 25% increase in patient survey completion rate and the establishment of a targeted surgeon shadowing program.
+- Maintained and expanded the team's R package, implementing specialized functions to improve coding efficiency and optimized validation workflows. Resulting in a 70% reduction in validation time and significantly enhancing the reliability and reproducibility of downstream analyses
+- Developed and executed complex SQL queries to create robust patient cohorts, joining and preprocessing data from multiple clinical databases.
 
-<center> <h2>Work Experience</h2> </center>
+### Weill Cornell Medicine
+**Computational Research Technician** | New York, NY | June 2021 -- Dec. 2022
 
-<h3>Computational Research Technician</h3>
-**Weill Cornell Medicine** [June 2021 - Present]{style="float:right"}  
-Department of Immunology - New York, NY  
+- Engineered a scalable bioinformatics pipeline for high-throughput assembly of genomes, deploying it on a Linux-based HPC cluster using SLURM schedulers for parallel processing.
+- Conducted genome-wide association studies on WGS data to identify genomic variations in fungal strains related to Inflammatory Bowel Disease using advanced bioinformatics tools.
+- Leveraged data visualization libraries (e.g., ggplot2, ploty) and web framework (Shiny) in R to construct interactive dashboards showcasing differential analysis between IDB cohorts.
+- Developed an in-house database using MySQL to efficiently manage and query bioinformatics data.
 
-* Developed supervised and unsupervised machine learning models to identify meaningful patterns and variables of clinical data using R
+### Massachusetts General Hospital
+**Undergraduate Researcher** | Charlestown, MA | Sept. 2018 -- May 2019
 
-* Conducted GWAS to identify regions associated with damaging potential in fungi found in human gut
+- Developed a machine learning model using Support Vector Machines and Principal Component Analysis in R to predict Alzheimer's risk, achieving 90%+ accuracy.
+- Architected a scalable ETL pipeline in R, integrating API data retrieval and advanced data wrangling techniques to process large-scale hematological datasets.
+- Optimized SVM hyperparameters through grid search and cross-validation, ensuring model generalizability and mitigating overfitting.
 
-* Experience with HPC clusters (slurm based) to run NGS assemblies and analysis
+## EDUCATION
 
-* Developed pipeline to assemble and analyze fungal genomes in both de novo assembly-based and referenced-based techniques utilizing *GATK*, *BWA*, and *samtools* among other packages
+### Columbia University
+**Master of Science in Biostatistics** | New York, NY | May 2022
 
-* Constructed dozens of exploratory reports to visualize differences in IBD groups using *ggplot* and *Shiny* packages in R
+GPA: 4.0/4.0
 
-* created in-house database to organize project data with Microsoft Access and SQL
+### Boston University
+**Bachelor of Science in Biomedical Engineering** | Boston, MA | May 2019
 
-<h3>Undergraduate Researcher</h3>
-**Massachusetts General Hospital** [Sept 2018 - May 2019]{style="float:right"}  
-Martinos Center for Biomedical Imaging - Charlestown, MA  
+GPA: 3.4/4.0 *Cum Laude*
 
-* Developed highly accurate SVM classifier model with R using blood biomarkers to identify at risk Alzheimer's subjects
+## PROJECTS
 
-* Wrote custom R script to pull data from API and clean large dataset from national Alzheimer's database
+- [Simulation Project](./projects/simulation_project.html) - Columbia University, Spring 2022
+  - Developed a complex simulation study to evaluate statistical power in clinical trials
+- [March Madness 2021 Machine Learning](./projects/march_madness_2021.html) - Personal Project, March 2021
+  - Conducted predictive analysis of NCAA basketball tournament outcomes using historical data
+- [Comparing Pandemics](https://jak2312.shinyapps.io/shiny_dashboard/) - Columbia University, Fall 2021
+  - Created a dynamic dashboard for visualizing and choropleth map for comparing different pandemics
+- [Instacart Shiny Dashboard](dashboard.html) - Columbia University, Fall 2021
+  - Designed an interactive tool for exploring Instacart customer behavior and product trends
+- [Linear Modeling of Hate Crimes](./projects/hate_crime.pdf) - Columbia University, Spring 2021
+  - Applied advanced statistical methods to analyze factors influencing hate crime incidence rates
 
-* Utilized statistical methods such as PCR to handle high dimensional data and preformed validation methods including 10-fold cross validation to corroborate results
+## SKILLS & INTERESTS
 
-<br>
-
-<center> <h2>Additional Work Experience</h2> </center>
-
-<h3>Private Tutor</h3>
-**Subjects: SAT Math, GRE Math, Algebra, Calculus, Statistics** [May 2018 - May 2022]{style="float:right"}  
-New York, NY
-
-* Prepare lesson plans tailored to needs of specific students and engage them using applicable examples and vernacular
-
-* Assist with assigned homework and projects, with recent clients receiving high marks on math section of SAT and As in AP Calculus
-
-<h3>Floral Clerk/Shop Assistant</h3>
-**S.F. Falconer Florist Inc.** [Nov 2019 - June 2020]{style="float:right"}  
-Port Washington, NY
-
-* Assisted 30+ customers a day in making purchase decisions by understanding their needs and preferences
-
-* Supported with pre-sales and post-sales support including product selection, making changes to orders, and managing expectations
-
-
-<h3>Front Desk Assistant</h3>
-**Boston University Career Development Office** [May 2018 - Dec 2018]{style="float:right"}  
-Boston, MA
-
-* Assisted 30+ customers a day in making purchase decisions by understanding their needs and preferences
-
-* Supported with pre-sales and post-sales support including product selection, making changes to orders, and managing expectations
-
-<br>
-
-<center> <h2>Projects</h2> </center>
-
-<h4>Simulation Study: Comparing Variable Selection Methods</h4>
-Columbia University [Spring 2021]{style="float:right"}  
-[Click to View](./projects/simulation_project.html){style="float:right"}  
-
-* Worked in group of three to simulate models to compare step-wise forward selection method and lasso regression
-
-<h4>Predicting the Outcome of the 2021 NCAA DI Men's Basketball Tournament</h4>  
-Columbia University [Spring 2021]{style="float:right"}  
-
-* Worked individually to train machine learning models to predict the winner of the 2021 March Madness tournament
-
-<h4>Future of COVID-19: Looking at Past Pandemics</h4>  
-Columbia University [Fall 2020]{style="float:right"}  
-
-* Worked in group of four to develop shiny dashboard report with interactive plots, as well as choropleth map comparing COVID-19 cumulative case and death data to that of past pandemics and seasonal flu
-
-<h4>Linear Model to Explain Hate Crimes in the U.S. in 2016</h4>  
-Columbia University [Fall 2020]{style="float:right"}  
-
-* Worked in group of five to construct linear models and study covariates associated with hate crimes in the U.S. in 2016
-
-<h4>Prototyping an EpiPen Insulator</h4>  
-Boston University [Spring 2018]{style="float:right"} 
-
-* Worked in group of four to design and create functional prototype based on client's wants and needs
-
-<br>
-
-<center> <h2>Skills</h2> </center>
-
-**In order of competency:**  
-
-* R 
-
-* SQL
-
-* SAS
-
-* Python
-
-* Microsoft Access, Excel, Powerpoint, and Word
-
-* Bash
-
-* MATLAB
-
-* C++ 
-
+- **Technical Skills:** R Programming; SQL; Python; Statistical Programming; Advanced Statistics; High-Performance Computing; ETL; Agile Methodologies; Research Collaboration; Git
+- **Interests/Hobbies:** 3D Printing & Design; Mechanical Keyboards; Pickleball; World of Warcraft; Overwatch

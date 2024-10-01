@@ -13,7 +13,8 @@
 
 <title>resume.knit</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -61,6 +62,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="bootstrap.css" type="text/css" />
 
 
@@ -85,6 +87,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -142,11 +147,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -175,8 +184,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -184,16 +193,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -310,7 +312,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -329,7 +331,7 @@ div.tocify {
   <a href="resume.html">RESUME</a>
 </li>
 <li>
-  <a href="mailto:&lt;jaredk1097@gmail.com&gt;">
+  <a href="mailto:&lt;jared.a.klug@gmail.com&gt;">
     <span class="fa fa-envelope"></span>
      
   </a>
@@ -353,144 +355,126 @@ div.tocify {
 </div>
 
 
-<center>
-<h2>
-Education
-</h2>
-</center>
-<h3>
-Columbia University
-</h3>
-<p>Mailman School of Public Health - New York, NY <span style="float:right">April 2022</span><br />
-Master of Science in Biostatistics<br />
-GPA: 4.00</p>
-<h3>
-Boston University
-</h3>
-<p>College of Engineering - Boston, MA <span style="float:right">May 2019</span><br />
-Bachelor of Science in Biomedical Engineering<br />
-GPA: 3.48 - Cum Laude</p>
-<p><br></p>
-<center>
-<h2>
-Work Experience
-</h2>
-</center>
-<h3>
-Computational Research Technician
-</h3>
-<p><strong>Weill Cornell Medicine</strong> <span style="float:right">June 2021 - Present</span><br />
-Department of Immunology - New York, NY</p>
+<div id="work-experience" class="section level2">
+<h2>WORK EXPERIENCE</h2>
+<div id="memorial-sloan-kettering" class="section level3">
+<h3>Memorial Sloan Kettering</h3>
+<p><strong>Data Analyst</strong> | New York, NY | Dec. 2022 –
+Present</p>
 <ul>
-<li><p>Developed supervised and unsupervised machine learning models to identify meaningful patterns and variables of clinical data using R</p></li>
-<li><p>Conducted GWAS to identify regions associated with damaging potential in fungi found in human gut</p></li>
-<li><p>Experience with HPC clusters (slurm based) to run NGS assemblies and analysis</p></li>
-<li><p>Developed pipeline to assemble and analyze fungal genomes in both de novo assembly-based and referenced-based techniques utilizing <em>GATK</em>, <em>BWA</em>, and <em>samtools</em> among other packages</p></li>
-<li><p>Constructed dozens of exploratory reports to visualize differences in IBD groups using <em>ggplot</em> and <em>Shiny</em> packages in R</p></li>
-<li><p>created in-house database to organize project data with Microsoft Access and SQL</p></li>
+<li>Optimized data processing pipeline using parallel computing and
+cluster technology, reducing computational time by 50%, leading to
+faster clinical insight</li>
+<li>Implemented advanced statistical techniques, including a robust
+method to quantify surgeons’ contribution to outcome variation. This
+data-driven approach led to a redesigned feedback system, resulting in a
+25% increase in patient survey completion rate and the establishment of
+a targeted surgeon shadowing program.</li>
+<li>Maintained and expanded the team’s R package, implementing
+specialized functions to improve coding efficiency and optimized
+validation workflows. Resulting in a 70% reduction in validation time
+and significantly enhancing the reliability and reproducibility of
+downstream analyses</li>
+<li>Developed and executed complex SQL queries to create robust patient
+cohorts, joining and preprocessing data from multiple clinical
+databases.</li>
 </ul>
-<h3>
-Undergraduate Researcher
-</h3>
-<p><strong>Massachusetts General Hospital</strong> <span style="float:right">Sept 2018 - May 2019</span><br />
-Martinos Center for Biomedical Imaging - Charlestown, MA</p>
+</div>
+<div id="weill-cornell-medicine" class="section level3">
+<h3>Weill Cornell Medicine</h3>
+<p><strong>Computational Research Technician</strong> | New York, NY |
+June 2021 – Dec. 2022</p>
 <ul>
-<li><p>Developed highly accurate SVM classifier model with R using blood biomarkers to identify at risk Alzheimer’s subjects</p></li>
-<li><p>Wrote custom R script to pull data from API and clean large dataset from national Alzheimer’s database</p></li>
-<li><p>Utilized statistical methods such as PCR to handle high dimensional data and preformed validation methods including 10-fold cross validation to corroborate results</p></li>
+<li>Engineered a scalable bioinformatics pipeline for high-throughput
+assembly of genomes, deploying it on a Linux-based HPC cluster using
+SLURM schedulers for parallel processing.</li>
+<li>Conducted genome-wide association studies on WGS data to identify
+genomic variations in fungal strains related to Inflammatory Bowel
+Disease using advanced bioinformatics tools.</li>
+<li>Leveraged data visualization libraries (e.g., ggplot2, ploty) and
+web framework (Shiny) in R to construct interactive dashboards
+showcasing differential analysis between IDB cohorts.</li>
+<li>Developed an in-house database using MySQL to efficiently manage and
+query bioinformatics data.</li>
 </ul>
-<p><br></p>
-<center>
-<h2>
-Additional Work Experience
-</h2>
-</center>
-<h3>
-Private Tutor
-</h3>
-<p><strong>Subjects: SAT Math, GRE Math, Algebra, Calculus, Statistics</strong> <span style="float:right">May 2018 - May 2022</span><br />
-New York, NY</p>
+</div>
+<div id="massachusetts-general-hospital" class="section level3">
+<h3>Massachusetts General Hospital</h3>
+<p><strong>Undergraduate Researcher</strong> | Charlestown, MA |
+Sept. 2018 – May 2019</p>
 <ul>
-<li><p>Prepare lesson plans tailored to needs of specific students and engage them using applicable examples and vernacular</p></li>
-<li><p>Assist with assigned homework and projects, with recent clients receiving high marks on math section of SAT and As in AP Calculus</p></li>
+<li>Developed a machine learning model using Support Vector Machines and
+Principal Component Analysis in R to predict Alzheimer’s risk, achieving
+90%+ accuracy.</li>
+<li>Architected a scalable ETL pipeline in R, integrating API data
+retrieval and advanced data wrangling techniques to process large-scale
+hematological datasets.</li>
+<li>Optimized SVM hyperparameters through grid search and
+cross-validation, ensuring model generalizability and mitigating
+overfitting.</li>
 </ul>
-<h3>
-Floral Clerk/Shop Assistant
-</h3>
-<p><strong>S.F. Falconer Florist Inc.</strong> <span style="float:right">Nov 2019 - June 2020</span><br />
-Port Washington, NY</p>
+</div>
+</div>
+<div id="education" class="section level2">
+<h2>EDUCATION</h2>
+<div id="columbia-university" class="section level3">
+<h3>Columbia University</h3>
+<p><strong>Master of Science in Biostatistics</strong> | New York, NY |
+May 2022</p>
+<p>GPA: 4.0/4.0</p>
+</div>
+<div id="boston-university" class="section level3">
+<h3>Boston University</h3>
+<p><strong>Bachelor of Science in Biomedical Engineering</strong> |
+Boston, MA | May 2019</p>
+<p>GPA: 3.4/4.0 <em>Cum Laude</em></p>
+</div>
+</div>
+<div id="projects" class="section level2">
+<h2>PROJECTS</h2>
 <ul>
-<li><p>Assisted 30+ customers a day in making purchase decisions by understanding their needs and preferences</p></li>
-<li><p>Supported with pre-sales and post-sales support including product selection, making changes to orders, and managing expectations</p></li>
-</ul>
-<h3>
-Front Desk Assistant
-</h3>
-<p><strong>Boston University Career Development Office</strong> <span style="float:right">May 2018 - Dec 2018</span><br />
-Boston, MA</p>
+<li><a href="./projects/simulation_project.html">Simulation Project</a>
+- Columbia University, Spring 2022
 <ul>
-<li><p>Assisted 30+ customers a day in making purchase decisions by understanding their needs and preferences</p></li>
-<li><p>Supported with pre-sales and post-sales support including product selection, making changes to orders, and managing expectations</p></li>
-</ul>
-<p><br></p>
-<center>
-<h2>
-Projects
-</h2>
-</center>
-<right>
-<h4>
-Simulation Study: Comparing Variable Selection Methods
-</h4>
-<p></right><left><a href="./projects/simulation_project.html" style="float:right">Click to View</a></left> Columbia University <span style="float:right">Spring 2021</span></p>
+<li>Developed a complex simulation study to evaluate statistical power
+in clinical trials</li>
+</ul></li>
+<li><a href="./projects/march_madness_2021.html">March Madness 2021
+Machine Learning</a> - Personal Project, March 2021
 <ul>
-<li>Worked in group of three to simulate models to compare step-wise forward selection method and lasso regression</li>
-</ul>
-<h4>
-Predicting the Outcome of the 2021 NCAA DI Men’s Basketball Tournament
-</h4>
-<p>Columbia University <span style="float:right">Spring 2021</span></p>
+<li>Conducted predictive analysis of NCAA basketball tournament outcomes
+using historical data</li>
+</ul></li>
+<li><a href="https://jak2312.shinyapps.io/shiny_dashboard/">Comparing
+Pandemics</a> - Columbia University, Fall 2021
 <ul>
-<li>Worked individually to train machine learning models to predict the winner of the 2021 March Madness tournament</li>
-</ul>
-<h4>
-Future of COVID-19: Looking at Past Pandemics
-</h4>
-<p>Columbia University <span style="float:right">Fall 2020</span></p>
+<li>Created a dynamic dashboard for visualizing and choropleth map for
+comparing different pandemics</li>
+</ul></li>
+<li><a href="dashboard.html">Instacart Shiny Dashboard</a> - Columbia
+University, Fall 2021
 <ul>
-<li>Worked in group of four to develop shiny dashboard report with interactive plots, as well as choropleth map comparing COVID-19 cumulative case and death data to that of past pandemics and seasonal flu</li>
-</ul>
-<h4>
-Linear Model to Explain Hate Crimes in the U.S. in 2016
-</h4>
-<p>Columbia University <span style="float:right">Fall 2020</span></p>
+<li>Designed an interactive tool for exploring Instacart customer
+behavior and product trends</li>
+</ul></li>
+<li><a href="./projects/hate_crime.pdf">Linear Modeling of Hate
+Crimes</a> - Columbia University, Spring 2021
 <ul>
-<li>Worked in group of five to construct linear models and study covariates associated with hate crimes in the U.S. in 2016</li>
+<li>Applied advanced statistical methods to analyze factors influencing
+hate crime incidence rates</li>
+</ul></li>
 </ul>
-<h4>
-Prototyping an EpiPen Insulator
-</h4>
-<p>Boston University <span style="float:right">Spring 2018</span></p>
+</div>
+<div id="skills-interests" class="section level2">
+<h2>SKILLS &amp; INTERESTS</h2>
 <ul>
-<li>Worked in group of four to design and create functional prototype based on client’s wants and needs</li>
+<li><strong>Technical Skills:</strong> R Programming; SQL; Python;
+Statistical Programming; Advanced Statistics; High-Performance
+Computing; ETL; Agile Methodologies; Research Collaboration; Git</li>
+<li><strong>Interests/Hobbies:</strong> 3D Printing &amp; Design;
+Mechanical Keyboards; Pickleball; World of Warcraft; Overwatch</li>
 </ul>
-<p><br></p>
-<center>
-<h2>
-Skills
-</h2>
-</center>
-<p><strong>In order of competency:</strong></p>
-<ul>
-<li><p>R</p></li>
-<li><p>SQL</p></li>
-<li><p>SAS</p></li>
-<li><p>Python</p></li>
-<li><p>Microsoft Access, Excel, Powerpoint, and Word</p></li>
-<li><p>Bash</p></li>
-<li><p>MATLAB</p></li>
-<li><p>C++</p></li>
-</ul>
+</div>
 
 
 
