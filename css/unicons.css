@@ -55,6 +55,16 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
  
+ .icon-github {
+  width: 20px;  /* Adjust size as needed */
+  height: 20px;  /* Adjust size as needed */
+  margin-right: 8px;  /* Space between icon and text */
+}
+
+.btn .icon-github {
+  filter: brightness(0) invert(1);  /* This makes the icon white, adjust if needed */
+}
+
 .uil-abacus:before { content: '\e800'; } /* '' */
 .uil-accessible-icon-alt:before { content: '\e801'; } /* '' */
 .uil-adjust-alt:before { content: '\e802'; } /* '' */
